@@ -14,24 +14,25 @@ import java.io.IOException;
 
 public class Main extends PApplet {
 
-Turtle turtle;
+int maxDepth;
 
 public void setup(){
     
 
-    turtle = new Turtle(width/8, height/2, 0, true);
-    noLoop();
-    background(0);
+    maxDepth = 2;
 }
 
 public void draw(){
+    background(0);
     stroke(255);
     strokeWeight(1);
-
-    koch(turtle, 3*width/4, 2);
+    
+    Turtle turtle = new Turtle(width/8, height/2, 0, true);
+    koch(turtle, 3*width/4, maxDepth);
 }
 
 public void koch(Turtle t, float length, int depth){
+
     if(depth <= 0) t.move(length);
     else {
         koch(t, length/3, depth-1);
@@ -42,6 +43,13 @@ public void koch(Turtle t, float length, int depth){
         t.turn(-PI/3);
         koch(t, length/3, depth-1);
     }
+}
+
+public void mousePressed() {
+    if(mouseButton == LEFT)
+        maxDepth++;
+    else if(mouseButton == RIGHT)
+        maxDepth--;
 }
 class Turtle{
     float x;
